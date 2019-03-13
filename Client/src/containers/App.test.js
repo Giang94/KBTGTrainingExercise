@@ -10,7 +10,7 @@ describe('<App />', () => {
     beforeEach(()=>{
         wrapper = shallow(<ProductSearch />)
     });
-    it('renders <ProductSearch /> components', () => {
+    it('renders children <ProductSearch /> components', () => {
         expect(wrapper.length).toEqual(1)
     });
 });
