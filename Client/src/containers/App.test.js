@@ -1,15 +1,14 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import App from './App'
+import {App} from './App'
+Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
     //addTodo: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<App {...props} />)
-
+  const enzymeWrapper = shallow(<App />)
   return {
     props,
     enzymeWrapper
@@ -20,10 +19,9 @@ describe('components', () => {
   describe('App', () => {
     it('should render self and subcomponents', () => {
       const { enzymeWrapper } = setup()
-
+      //console.log(enzymeWrapper.shallow().find('header').prop('class'))
       expect(enzymeWrapper.find('header').hasClass('header')).toBe(true)
-
-      // expect(enzymeWrapper.find('h1').text()).toBe('todos')
+      //expect(enzymeWrapper.find('#ageBox')).toBe.lengthOf(1)
       //
       // const todoInputProps = enzymeWrapper.find('TodoTextInput').props()
       // expect(todoInputProps.newTodo).toBe(true)
