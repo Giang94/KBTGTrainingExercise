@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
 
@@ -31,6 +33,20 @@ public class OrderService {
             responseObject.setStatus("FAILED");
             responseObject.setMessageCode(Messages.PRODUCT_SAVE_FAILED);
             LOGGER.error("Exception while creating product", e);
+        }
+        return responseObject;
+    }
+
+    public GenericResponseObject getAllOrders() {
+        LOGGER.debug("Getting all order...");
+        GenericResponseObject responseObject = new GenericResponseObject();
+        try{
+            List<Order> orders = repository.findAll();
+            responseObject.setData(orders);
+        } catch (Exception e){
+            responseObject.setStatus("FAILED");
+            responseObject.setMessageCode(Messages.SERVER_DATABASE_ERROR);
+            LOGGER.error("Exception while getting data", e);
         }
         return responseObject;
     }
