@@ -56,11 +56,11 @@ public class ProductService {
                 responseObject.setData(existingProduct.get());
             } else {
                 responseObject.setMessageCode(Messages.PRODUCT_ID_NOT_EXIST);
-                responseObject.setMessageCode(Messages.SERVER_DATABASE_ERROR);
                 LOGGER.warn("Product id {} doesn't exist", id);
             }
         } catch (Exception e){
             LOGGER.error("Exception while getting data", e);
+            responseObject.setMessageCode(Messages.SERVER_DATABASE_ERROR);
         }
         return responseObject;
     }
