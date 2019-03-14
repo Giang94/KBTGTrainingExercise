@@ -40,7 +40,7 @@ export default class ProductSearch extends Component {
         if(result) {
           this.setState({products: result})
         }
-      })
+      }).catch()
     }
 
     componentDidMount() {
