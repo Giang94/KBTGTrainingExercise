@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import TableComponent from '../../components/TableComponent';
+// import './shoppingCart.css';
 
 class ShoppingCart extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class ShoppingCart extends Component {
 
   render() {
     return (
-      <div>
+      <div className="shopping-cart">
         <div className='title'>Shopping Cart</div>
         <TableComponent
           className='item-list'

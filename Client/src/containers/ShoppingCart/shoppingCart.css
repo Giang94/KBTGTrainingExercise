@@ -1,0 +1,13 @@
+.shopping-cart table, td, th {  
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.shopping-cart table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.shopping-cart th, td {
+  padding: 15px;
+}
