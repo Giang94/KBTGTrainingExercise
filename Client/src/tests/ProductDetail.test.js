@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import ProductDetail from '../containers/ProductDetail';
+import SelectBox from '../components/Select';
 
 describe('Product Detail tests', () => {
   let wrapper;
@@ -18,7 +19,7 @@ describe('Product Detail tests', () => {
       // arrange
       const onChange = jest.fn();
       // given
-      const qualitySelect = shallow(<SelectBox id="QValue" data={ageValue} handleChange={onChange} />, { disableLifecycleMethods: true })
+      const qualitySelect = shallow(<SelectBox id="QValue" data={QValue} handleChange={onChange} />, { disableLifecycleMethods: true })
       expect(qualitySelect.find('select')).toBeDefined();
 
       const form = qualitySelect.find('select');

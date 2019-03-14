@@ -38,7 +38,7 @@ export default class ProductDetail extends Component {
         if(result) {
           this.setState({productDetail: result})
         }
-      })
+      }).catch()
     }
 
     render() {
