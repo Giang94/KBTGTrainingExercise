@@ -25,17 +25,18 @@
   "author": "BinhLam",
   "license": "ISC",
   "dependencies": {
+    "babel-jest": "^21.2.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "jest": "^21.2.1",
+    "jest-cli": "^21.2.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-thunk": "^2.3.0",
-    "babel-jest": "^21.2.0",
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.2",
-    "jest": "^21.2.1",
-    "jest-cli": "^21.2.1",
+    "sinon": "^7.2.7",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
