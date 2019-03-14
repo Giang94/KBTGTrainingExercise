@@ -7,6 +7,7 @@ class ShippingAddressForm extends Component {
     super(props);
 
     const { fullName, address1, address2, city, provine, postCode } = props.addressInfo
+    
     this.state = {
       fullName, address1, address2, city, provine, postCode
     };
@@ -17,7 +18,7 @@ class ShippingAddressForm extends Component {
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeProvine = this.onChangeProvine.bind(this);
     this.onChangePostCode = this.onChangePostCode.bind(this);
-
+    this.deliverySubmit = this.deliverySubmit.bind(this);
   }
 
   onChangeFullName(e) {
@@ -50,8 +51,12 @@ class ShippingAddressForm extends Component {
     this.setState(() => ({postCode}));
   }
 
-  deliverySubmit() {
-    fullName, address1, address2, city, provine, postCode
+  deliverySubmit(e) {
+    e.preventDefault();
+    console.log('called');
+    this.props.onSubmit();
+    // return;
+    // fullName, address1, address2, city, provine, postCode
     const orderObj = {
         "address": {
           "fullName": this.state.fullName,
@@ -61,20 +66,25 @@ class ShippingAddressForm extends Component {
           "province": this.state.provine,
           "postCode": this.state.postCode
         },
-        "cartItems": {
+        "cartItems": [{
           "5c88ad8bb835e74a306db14e" : 2
-        },
+        }],
         "subTotal": 100000,
         "shippingFee": 50
       }
-      excuteOrderToDelivery(orderObj).then((result)=>{
-        console.log(result)
-      })
+      orderObj.cartItems = this.props.itemList.map((item) => (
+        {[item.id]: item.quality}
+      ));
+      console.log(orderObj);
+      // excuteOrderToDelivery(orderObj).then((result)=>{
+      //   console.log(result)
+      //   this.props.onSubmit();
+      // })
   }
 
   render() {
     return (
-      <form className="shipping-address-form" onSubmit={this.onSubmit}>
+      <form className="shipping-address-form" onSubmit={this.deliverySubmit}>
         <div className="form-group">
           <label>Full Name</label>
           <input
@@ -129,7 +139,7 @@ class ShippingAddressForm extends Component {
             onChange={this.onChangePostCode}
           />
         </div>
-        <button onClick={this.deliverySubmit}>Delivery to this address</button>
+        <button>Delivery to this address</button>
       </form>
     );
   }
