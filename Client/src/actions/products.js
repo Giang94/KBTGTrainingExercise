@@ -60,15 +60,21 @@ export function excuteGetProductDetail(productId){
 }
 
 export function excuteOrderToDelivery(orderObj){
-    const headers = {
+    const parameters = {
       method: 'POST',
-      'Content-Type': 'application/json'
+      body: JSON.stringify(orderObj),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      
     }
 
-    return fetch(orderAPI, headers).then(response => {
+    return fetch(orderAPI, parameters).then(response => {
         console.log(response)
         if (response.ok) {
-            
+            return response.json().then(result => {
+                return result.status
+            })
         }
         return Promise.reject(new Error('Error getting products'))
 
