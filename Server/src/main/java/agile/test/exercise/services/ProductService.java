@@ -41,13 +41,9 @@ public class ProductService {
      */
     public GenericResponseObject getProduct(String id){
         GenericResponseObject responseObject = new GenericResponseObject();
-        try {
-            Optional<Product> product = productRepository.findById(new ObjectId(id));
-            if (product.isPresent()) {
-                responseObject.setData(product.get());
-            }
-        } catch (Exception e){
-            responseObject.setStatus("FAILED");
+        Optional<Product> product = productRepository.findById(new ObjectId(id));
+        if (product.isPresent()) {
+            responseObject.setData(product.get());
         }
         return responseObject;
     }
