@@ -18,12 +18,11 @@ public class ProductRepositoryImpl implements ProductCustomRepository {
 
     @Override
     public List<Product> find(Map<String, Object> params, String ...  includedFields) {
-
         Criteria criteria = new Criteria();
         Query query = new Query();
         query.addCriteria(criteria);
         params.forEach((k, v) -> {
-            criteria.andOperator(Criteria.where(k).is(v));
+            criteria.and(k).is(v);
         });
 
         if (includedFields != null && includedFields.length != 0){

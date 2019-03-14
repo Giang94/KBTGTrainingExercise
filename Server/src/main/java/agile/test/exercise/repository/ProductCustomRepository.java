@@ -7,5 +7,11 @@ import java.util.Map;
 
 public interface ProductCustomRepository {
 
+    /**
+     * Find products by query params and return data with included fields
+     * @param params
+     * @param includedFields
+     * @return
+     */
     List<Product> find(Map<String, Object> params, String ... includedFields);
 }
