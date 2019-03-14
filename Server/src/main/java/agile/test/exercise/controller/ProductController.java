@@ -20,11 +20,11 @@ public class ProductController {
     @RequestMapping(value = "/product", method = RequestMethod.GET)
     public GenericResponseObject getAllProduct(@RequestParam(value = "age", required = false) String age, @RequestParam(value = "gender", required = false) String gender){
         Map<String, Object> requestParams = new HashMap<>();
-        if (age != null){
+        if (age != null && !age.isEmpty()){
             requestParams.put("age", age);
         }
 
-        if (gender != null){
+        if (gender != null && !gender.isEmpty()){
             requestParams.put("gender", gender);
         }
 

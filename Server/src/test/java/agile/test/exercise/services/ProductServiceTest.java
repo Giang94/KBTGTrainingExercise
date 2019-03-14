@@ -3,6 +3,7 @@ package agile.test.exercise.services;
 import agile.test.exercise.model.Product;
 import agile.test.exercise.repository.ProductRepository;
 import agile.test.exercise.responseoject.GenericResponseObject;
+import agile.test.exercise.utils.Messages;
 import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,11 +26,10 @@ public class ProductServiceTest {
     private ProductService productService;
 
     /**
-     * Case 1: query data by using age should return success with empty data
+     * Case 1: get products by age should return empty data in case of there is no product in server
      */
     @Test
     public void get_product_by_age_return_an_empty_list_data(){
-
         when(productRepository.find(anyMap(), any())).thenReturn(new ArrayList<>());
         GenericResponseObject responseObject = productService.getProducts(new HashMap<>());
 
@@ -38,7 +38,7 @@ public class ProductServiceTest {
     }
 
     /**
-     * Case 2: query data by using age should return success with data
+     * Case 2: get products by age should return a list of products
      */
     @Test
     public void get_product_by_age_return_a_list_data(){
@@ -56,7 +56,7 @@ public class ProductServiceTest {
 
 
     /**
-     * Case 3: should return success when querying when user don't select neither AGE or GENDER
+     * Case 3: get all product should return a list of product
      */
     @Test
     public void get_product_with_no_params_return_a_list_data(){
@@ -71,7 +71,9 @@ public class ProductServiceTest {
         assertFalse(((List)responseObject.getData()).isEmpty());
     }
 
-
+    /**
+     * get all product should return empty data in case of there is no product in server
+     */
     @Test
     public void get_product_with_no_params_return_empty_data(){
         when(productRepository.find(anyMap(), any())).thenReturn(new ArrayList<>());
@@ -82,6 +84,9 @@ public class ProductServiceTest {
         assertTrue(((List)responseObject.getData()).isEmpty());
     }
 
+    /**
+     * get products by gender should return empty data in case of there is no product in server
+     */
     @Test
     public void get_product_by_gender_return_empty_data(){
         Map<String, Object> mapData = new HashMap<>();
@@ -95,6 +100,9 @@ public class ProductServiceTest {
         assertTrue(((List)responseObject.getData()).isEmpty());
     }
 
+    /**
+     * get product by gender should return a list of products
+     */
     @Test
     public void get_product_by_gender_return_a_list_data(){
         Map<String, Object> mapData = new HashMap<>();
@@ -111,9 +119,8 @@ public class ProductServiceTest {
     }
 
     /**
-     * Bellow is a list of TCs of Product details
+     * get product details should return a full fill product
      */
-
     @Test
     public void get_product_details_should_return_full_fill_result(){
         Product product = new Product();
@@ -130,12 +137,14 @@ public class ProductServiceTest {
         assertTrue(responseObject.getData() != null);
     }
 
+    /**
+     * get product details should return empty data in case of product id doesn't exist
+     */
     @Test
     public void get_product_details_should_return_empty(){
-
         when(productRepository.findById(any(ObjectId.class))).thenReturn(Optional.empty());
         GenericResponseObject responseObject = productService.getProduct("5c88ad8bb835e74a306db14e");
 
-        assertTrue(responseObject.getData() == null);
+        assertTrue(responseObject.getMessageCode().equals(Messages.PRODUCT_ID_NOT_EXIST));
     }
 }
