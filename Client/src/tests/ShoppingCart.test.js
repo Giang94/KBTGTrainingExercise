@@ -1,10 +1,11 @@
 // ShoppingCart.test.js
 import React from 'react';
 import { shallow } from 'enzyme';
-import ShoppingCart from './ShoppingCart';
+import ShoppingCart from '../containers/ShoppingCart';
 
 describe('Shopping Cart', () => {
   let wrapper;
+  let history = { push: jest.fn() };
   beforeEach(() => wrapper = shallow(<ShoppingCart />));
 
   it('should render a title', () => {     
@@ -36,7 +37,6 @@ describe('Shopping Cart', () => {
       {name: 'abc', quantity: '1', price: '123'}
     ];
 
-    // wrapper.setProps({itemList: itemListFixture});
     wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>);
 
     expect(wrapper.find('.sub-total').length).toBe(1);
@@ -52,13 +52,22 @@ describe('Shopping Cart', () => {
       {name: 'www', quantity: '2', price: '10'},
     ];
 
-    // wrapper.setProps({itemList: itemListFixture});
     wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>);
 
     expect(wrapper.find('.sub-total').length).toBe(1);
     expect(wrapper.find('.sub-total-label').text()).toBe('Subtotal (4 items):');
     expect(wrapper.find('.sub-total-value').text()).toBe('365.00 THB');
     expect(wrapper.find('.total-value').text()).toBe('415.00 THB');
+  });
+
+  it('should render the checkout putton', () => {
+    expect(wrapper.find('button.checkout').length).toBe(1);
+  });
+
+  it('should handle the onSubmit action', () => {
+    wrapper = shallow(<ShoppingCart history={history}/>)
+    wrapper.find('button.checkout').simulate('click');
+    expect(history.push).toHaveBeenLastCalledWith('/shipping-address');
   });
 
 });

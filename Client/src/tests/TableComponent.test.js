@@ -1,7 +1,7 @@
 // ShoppingCart.test.js
 import React from 'react';
 import { shallow } from 'enzyme';
-import TableComponent from './TableComponent';
+import TableComponent from '../components/TableComponent';
 
 describe('Table Component', () => {
   let wrapper;
