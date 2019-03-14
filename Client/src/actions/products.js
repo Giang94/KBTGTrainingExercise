@@ -6,6 +6,7 @@ import { createAction } from 'redux-actions'
 
 export const getProducts = createAction(GET_PRODUCTS)
 const productAPI = 'http://93a591e4.ngrok.io/api/product/'
+const orderAPI = 'http://93a591e4.ngrok.io/api/order'
 import 'whatwg-fetch'
 
 function handleErrors(response) {
@@ -49,6 +50,25 @@ export function excuteGetProductDetail(productId){
             return response.json().then(result => {
                 return result.data
             })
+        }
+        return Promise.reject(new Error('Error getting products'))
+
+    })
+    .catch(error => {
+        return Promise.reject(error)
+    });
+}
+
+export function excuteOrderToDelivery(orderObj){
+    const headers = {
+      method: 'POST',
+      'Content-Type': 'application/json'
+    }
+
+    return fetch(orderAPI, headers).then(response => {
+        console.log(response)
+        if (response.ok) {
+            
         }
         return Promise.reject(new Error('Error getting products'))
 

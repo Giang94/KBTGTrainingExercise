@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {excuteOrderToDelivery} from '../../actions/products'
 
 class ShippingAddressForm extends Component {
   constructor(props) {
@@ -7,7 +8,7 @@ class ShippingAddressForm extends Component {
 
     const { fullName, address1, address2, city, provine, postCode } = props.addressInfo
     this.state = {
-      fullName, address1, address2, city, provine, postCode 
+      fullName, address1, address2, city, provine, postCode
     };
 
     this.onChangeFullName = this.onChangeFullName.bind(this);
@@ -16,7 +17,7 @@ class ShippingAddressForm extends Component {
     this.onChangeCity = this.onChangeCity.bind(this);
     this.onChangeProvine = this.onChangeProvine.bind(this);
     this.onChangePostCode = this.onChangePostCode.bind(this);
-    
+
   }
 
   onChangeFullName(e) {
@@ -49,12 +50,34 @@ class ShippingAddressForm extends Component {
     this.setState(() => ({postCode}));
   }
 
+  deliverySubmit() {
+    fullName, address1, address2, city, provine, postCode
+    const orderObj = {
+        "address": {
+          "fullName": this.state.fullName,
+          "address1": this.state.address1,
+          "address2": this.state.address2,
+          "city": this.state.city,
+          "province": this.state.provine,
+          "postCode": this.state.postCode
+        },
+        "cartItems": {
+          "5c88ad8bb835e74a306db14e" : 2
+        },
+        "subTotal": 100000,
+        "shippingFee": 50
+      }
+      excuteOrderToDelivery(orderObj).then((result)=>{
+        console.log(result)
+      })
+  }
+
   render() {
     return (
       <form className="shipping-address-form" onSubmit={this.onSubmit}>
         <div className="form-group">
           <label>Full Name</label>
-          <input 
+          <input
             type="text"
             placeholder="Full Name"
             value={this.state.fullName}
@@ -106,6 +129,7 @@ class ShippingAddressForm extends Component {
             onChange={this.onChangePostCode}
           />
         </div>
+        <button onClick={this.deliverySubmit}>Delivery to this address</button>
       </form>
     );
   }
