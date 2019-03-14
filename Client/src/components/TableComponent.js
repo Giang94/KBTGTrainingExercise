@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class TableComponent extends React.Component {
   render() {
     return (
-      <table className='table-component'>
+      <table className='table-component' style={{border: '1px solid #ddd', textAlign: 'left'}}>
         <thead>
           <tr>
             {this.props.columns.map((column, id)=>(
