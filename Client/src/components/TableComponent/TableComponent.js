@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 
 class TableComponent extends React.Component {
   render() {
     return (
-      <table className="table-component">
+      <table className='table-component'>
         <thead>
           <tr>
             {this.props.columns.map((column, id)=>(
@@ -17,6 +16,8 @@ class TableComponent extends React.Component {
           {this.props.data.map((d, i)=>(
             <tr key={i}>
               {this.props.columns.map((column, j)=>(
+                (typeof d[column.key] === 'function') ? 
+                <td key={j}>{d[column.key]()}</td> :
                 <td key={j}>{d[column.key]}</td>
               ))}
             </tr>

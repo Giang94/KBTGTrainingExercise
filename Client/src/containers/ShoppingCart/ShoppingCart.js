@@ -1,39 +1,90 @@
-import React, {Component} from 'react'
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import TableComponent from '../../components/TableComponent/TableComponent';
 
 class ShoppingCart extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shipping: props.shipping,
+      itemList: props.itemList,
+      columnConfig: [
+        {name: 'Items', key: 'details'},
+        {name: 'Quantity', key: 'quantity'},
+        {name: 'Price (THB)', key: 'price'}
+      ]
+    }
+    // this.getItemNumber = this.getItemNumber.bind(this);
+  }
+
+  getItemNumber() {
+    let itemNumber = 0;
+    this.state.itemList.forEach( item => {
+      itemNumber += parseInt(item.quantity, 10);
+    });
+    return itemNumber === 1 ? itemNumber + ' item' : itemNumber + ' items';
+  }
+
+  getSubTotal() {
+    let subTotal = 0;
+    this.state.itemList.forEach( item => {
+      subTotal += parseInt(item.price, 10) * parseInt(item.quantity, 10);
+    });
+    return subTotal;
+  }
+
+  getTotal() {
+    return this.getSubTotal() + this.state.shipping.fee;
+  }
+
   render() {
     return (
       <div>
-        <div className="title">Shopping Cart</div>
-        <TableComponent></TableComponent>
-        {/* <table className="order-list">
-          <thead>
-            <tr>
-              <th>Month</th>
-              <th>Savings</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>January</td>
-              <td>$100</td>
-            </tr>
-            <tr>
-              <td>February</td>
-              <td>$80</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>Sum</td>
-              <td>$180</td>
-            </tr>
-          </tfoot>
-        </table> */}
+        <div className='title'>Shopping Cart</div>
+        <TableComponent 
+          className='item-list' 
+          columns={this.state.columnConfig} 
+          data={this.state.itemList}>
+        </TableComponent>
+        <div className='sub-info'>
+          <div className='shipping-info'>
+            <div className='shipping-method'>
+              <span className='shipping-method-label'>Shipping Method:</span>
+              <span className='shipping-method-value'>{this.state.shipping.method}</span>
+            </div>
+            <div className='shipping-fee'>
+              <span className='shipping-fee-label'>Shipping Fee:</span>
+              <span className='shipping-fee-value'>{this.state.shipping.fee.toFixed(2)} THB</span>
+            </div>
+          </div>
+          <div className='total-info'>
+            <div className='sub-total'>
+              <span className='sub-total-label'>Subtotal ({this.getItemNumber()}):</span>
+              <span className='sub-total-value'>{this.getSubTotal().toFixed(2)} THB</span>
+            </div>
+            <div className='total'>
+              <span className='total-label'>Total:</span>
+              <span className='total-value'>{this.getTotal().toFixed(2)} THB</span>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  itemList: PropTypes.array,
+  shipping: PropTypes.object
+};
+
+ShoppingCart.defaultProps = {
+  itemList: [],
+  shipping: {
+    fee: 50,
+    method: 'Cash on Delivery'
+  }
+};
 
 export default ShoppingCart;

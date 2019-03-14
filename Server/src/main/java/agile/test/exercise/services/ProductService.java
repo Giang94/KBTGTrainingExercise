@@ -3,6 +3,7 @@ package agile.test.exercise.services;
 import agile.test.exercise.model.Product;
 import agile.test.exercise.repository.ProductRepository;
 import agile.test.exercise.responseoject.GenericResponseObject;
+import agile.test.exercise.utils.Messages;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,10 @@ public class ProductService {
     public GenericResponseObject getProduct(String id){
         GenericResponseObject responseObject = new GenericResponseObject();
         Optional<Product> product = productRepository.findById(new ObjectId(id));
-        if (product.isPresent()) {
+        if (product != null && product.isPresent()) {
             responseObject.setData(product.get());
+        } else {
+            responseObject.setMessageCode(Messages.PRODUCT_ID_NOT_EXIST);
         }
         return responseObject;
     }
