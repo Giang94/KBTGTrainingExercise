@@ -33,7 +33,7 @@ public class ProductController {
 
     @RequestMapping(value = "/product/{id}", method = RequestMethod.GET)
     public GenericResponseObject getProduct(@PathVariable String id){
-        return productService.getProduct(id);
+        return productService.getProductById(id);
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
