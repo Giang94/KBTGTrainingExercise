@@ -8,7 +8,7 @@ describe('<App />', () => {
     let wrapper;
 
     beforeEach(()=>{
-        wrapper = shallow(<ProductSearch />)
+        wrapper = shallow(<ProductSearch />, { disableLifecycleMethods: true })
     });
     it('renders children <ProductSearch /> components', () => {
         expect(wrapper.length).toEqual(1)

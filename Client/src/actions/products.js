@@ -6,6 +6,7 @@ import { createAction } from 'redux-actions'
 
 export const getProducts = createAction(GET_PRODUCTS)
 const productAPI = 'http://93a591e4.ngrok.io/api/product/'
+import 'whatwg-fetch'
 
 function handleErrors(response) {
   if (!response.ok) {
@@ -17,7 +18,6 @@ function handleErrors(response) {
 export function excuteGetProducts(filterParameters){
     (filterParameters !== '') ? filterParameters: ''
     const filterUrl = productAPI + filterParameters
-    console.log(filterUrl)
     const headers = {
       method: 'GET',
       'Content-Type': 'application/json'
@@ -39,7 +39,6 @@ export function excuteGetProducts(filterParameters){
 
 export function excuteGetProductDetail(productId){
     const filterUrl = productAPI + productId
-    console.log(filterUrl)
     const headers = {
       method: 'GET',
       'Content-Type': 'application/json'

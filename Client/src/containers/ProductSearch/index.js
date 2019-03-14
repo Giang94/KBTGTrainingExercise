@@ -48,7 +48,6 @@ export default class ProductSearch extends Component {
     }
 
     render() {
-      console.log(this.props)
         const ageValue = ['0-5', '5-10', '10-20', '20-30', '30-50', '50+']
         const genderValue = ['Male', 'Female']
         return <div style={rootStyle}>

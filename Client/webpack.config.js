@@ -16,6 +16,7 @@ module.exports = {
     },
     devServer: {
       historyApiFallback: true,
+      hot: true
     },
     plugins:[
         new hwp({template:path.join(__dirname, '/src/index.html')})

@@ -9,6 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers';
 import App from './containers/App';
 import ProductDetail from './containers/ProductDetail'
+import ShoppingCart from './containers/ShoppingCart/ShoppingCart'
 
 const store = createStore(
     combineReducers({

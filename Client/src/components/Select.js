@@ -9,8 +9,8 @@ export default class SelectBox extends Component {
     }
 
     render() {
-        return <select id={this.props.id} style={controlStyle} onChange={this.props.handleChange}>
-          <option></option>
+        return <select defaultValue={this.props.defaultValue ? this.props.defaultValue: ''} id={this.props.id} style={controlStyle} onChange={this.props.handleChange}>
+          {!this.props.defaultValue ? <option></option>: null}
           {
               this.props.data.length > 0 ? this.props.data.map((item, index) => {
                   return <option key={index}>{item}</option>

@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 function ListItem(props) {
   const { item } = props;
-  console.log(item)
   return <li className="item" key={item.id}><Link to={'/product/' + item.id}><span>{item.name}</span> - <span>{item.price}</span></Link></li>;
 }
 

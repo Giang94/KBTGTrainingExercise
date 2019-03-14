@@ -5,13 +5,14 @@ import ProductSearch from '../containers/ProductSearch';
 import SelectBox from '../components/Select';
 import sinon from 'sinon';
 
+
 describe('<ProductSearch />', () => {
     let wrapper;
     const ageValue = ['0-5', '5-10', '10-20', '20-30', '30-50', '50+']
     const genderValue = ['Male', 'Female']
 
     beforeEach(()=>{
-        wrapper = shallow(<ProductSearch />)
+        wrapper = shallow(<ProductSearch />, { disableLifecycleMethods: true })
     });
 
     it('should render its self', () => {
@@ -22,7 +23,7 @@ describe('<ProductSearch />', () => {
         // arrange
         const onChange = jest.fn();
         // given
-        const ageSelect = shallow(<SelectBox id="ageValue" data={ageValue} handleChange={onChange} />)
+        const ageSelect = shallow(<SelectBox id="ageValue" data={ageValue} handleChange={onChange} />, { disableLifecycleMethods: true })
         expect(ageSelect.find('select')).toBeDefined();
 
         const form = ageSelect.find('select');
@@ -34,7 +35,7 @@ describe('<ProductSearch />', () => {
         // arrange
         const onChange = jest.fn();
         // given
-        const genderSelect = shallow(<SelectBox id="genderValue" data={genderValue} handleChange={onChange} />)
+        const genderSelect = shallow(<SelectBox id="genderValue" data={genderValue} handleChange={onChange} />, { disableLifecycleMethods: true })
         expect(genderSelect.find('select')).toBeDefined();
 
         const form = genderSelect.find('select');

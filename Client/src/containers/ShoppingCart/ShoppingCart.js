@@ -42,9 +42,9 @@ class ShoppingCart extends Component {
     return (
       <div>
         <div className='title'>Shopping Cart</div>
-        <TableComponent 
-          className='item-list' 
-          columns={this.state.columnConfig} 
+        <TableComponent
+          className='item-list'
+          columns={this.state.columnConfig}
           data={this.state.itemList}>
         </TableComponent>
         <div className='sub-info'>
