@@ -10,6 +10,7 @@ import reducers from './reducers';
 import App from './containers/App';
 import ProductDetail from './containers/ProductDetail'
 import ShoppingCart from './containers/ShoppingCart';
+import ShippingAddress from './containers/ShippingAddress';
 
 const store = createStore(
     combineReducers({
@@ -29,6 +30,7 @@ render(
         <Route exact path="/" component={App}/>
         <Route path="/product/:searchParams" component={ProductDetail}/>
         <Route path="/shopping-cart" component={ShoppingCart}/>
+        <Route path="/shipping-address" component={ShippingAddress}/>
       </div>
     </BrowserRouter>
   </Provider>,
