@@ -91,15 +91,14 @@ class ShippingAddress extends Component {
           "province": this.state.provine,
           "postCode": this.state.postCode
         },
-        "cartItems": [{
-          "5c88ad8bb835e74a306db14e" : 2
-        }],
+        "cartItems": {},
         "subTotal": 100000,
         "shippingFee": 50
       }
-      orderObj.cartItems = this.state.itemList.map((item) => (
-        {[item.id]: item.quality}
-      ));
+      this.state.itemList.forEach((item) => {
+        orderObj.cartItems[item.id] = item.quality;
+        // {[item.id]: item.quality}
+      });
       console.log(orderObj);
       excuteOrderToDelivery(orderObj).then((result)=>{
         // console.log(result)
