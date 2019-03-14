@@ -14,6 +14,9 @@ module.exports = {
             loader: 'babel-loader'
         }]
     },
+    devServer: {
+      historyApiFallback: true,
+    },
     plugins:[
         new hwp({template:path.join(__dirname, '/src/index.html')})
     ]

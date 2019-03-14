@@ -1,28 +1,34 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, combineReducers } from 'redux'
-import { Router, Route, browserHistory } from 'react-router'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { BrowserRouter, Link, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers';
 import App from './containers/App';
+import ProductDetail from './containers/ProductDetail'
 
 const store = createStore(
     combineReducers({
       ...reducers,
       routing: routerReducer
-    })
+    }),
+    applyMiddleware(thunkMiddleware)
 );
 // Create an enhanced history that syncs navigation events with the store
+const browserHistory = createBrowserHistory()
 const history = syncHistoryWithStore(browserHistory, store)
 render(
   <Provider store={store}>
     { /* Tell the Router to use our enhanced history */ }
-    <Router history={history}>
-      <Route path="/" component={App}>
-      </Route>
-    </Router>
+    <BrowserRouter>
+      <div>
+        <Route exact path="/" component={App}/>
+        <Route path="/product/:searchParams" component={ProductDetail}/>
+      </div>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );

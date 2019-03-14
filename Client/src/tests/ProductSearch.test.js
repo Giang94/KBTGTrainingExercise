@@ -37,7 +37,7 @@ describe('<ProductSearch />', () => {
         const genderSelect = shallow(<SelectBox id="genderValue" data={genderValue} handleChange={onChange} />)
         expect(genderSelect.find('select')).toBeDefined();
 
-        const form = ageSelect.find('select');
+        const form = genderSelect.find('select');
         form.props().onChange(genderValue[0]);
         expect(onChange).toBeCalledWith('Male');
     });
