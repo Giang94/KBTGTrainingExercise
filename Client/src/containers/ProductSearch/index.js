@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import SelectBox from '../../components/Select'
+import List from './List'
+import {excuteGetProducts} from '../../actions/products'
 
 const controlStyle = {
   width: '150px'
@@ -16,7 +18,8 @@ export default class ProductSearch extends Component {
         this.state = {
             ageValue: '',
             genderValue: '',
-            isClickedSearch: ''
+            isClickedSearch: '',
+            products: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -28,16 +31,24 @@ export default class ProductSearch extends Component {
     }
 
     handleClick(event) {
-        if(this.state.ageValue && this.state.genderValue) {
-            this.setState({isClickedSearch: true})
+        this.setState({isClickedSearch: true})
+        this.getProducts('?age=' + this.state.ageValue + '&gender=' + this.state.genderValue.toLowerCase())
+    }
+
+    getProducts(filterParameters) {
+      excuteGetProducts(filterParameters).then((result) => {
+        if(result) {
+          this.setState({products: result})
         }
+      })
     }
 
     componentDidMount() {
-      //this.props.getUsers()
+        this.getProducts('')
     }
 
     render() {
+      console.log(this.props)
         const ageValue = ['0-5', '5-10', '10-20', '20-30', '30-50', '50+']
         const genderValue = ['Male', 'Female']
         return <div style={rootStyle}>
@@ -50,8 +61,9 @@ export default class ProductSearch extends Component {
                 <label>Gender</label> <br/>
                 <SelectBox id={'genderValue'} handleChange={this.handleChange} data={genderValue}/>
               </div>
-              <button id="searchBtn" type="button" onClick={this.handleClick}>Search</button>
+              <button style={{marginTop: '10px'}} id="searchBtn" type="button" onClick={this.handleClick}>Search</button>
             </header>
+            <List items={this.state.products}/>
       </div>
     }
 }
