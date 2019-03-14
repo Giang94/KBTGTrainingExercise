@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import TableComponent from '../../components/TableComponent/TableComponent';
+import TableComponent from '../../components/TableComponent';
 
 class ShoppingCart extends Component {
   constructor(props) {
@@ -15,7 +15,10 @@ class ShoppingCart extends Component {
         {name: 'Price (THB)', key: 'price'}
       ]
     }
-    // this.getItemNumber = this.getItemNumber.bind(this);
+    this.processToCheckout = this.processToCheckout.bind(this);
+    this.getItemNumber = this.getItemNumber.bind(this);
+    this.getSubTotal = this.getSubTotal.bind(this);
+    this.getTotal = this.getTotal.bind(this);
   }
 
   getItemNumber() {
@@ -36,6 +39,10 @@ class ShoppingCart extends Component {
 
   getTotal() {
     return this.getSubTotal() + this.state.shipping.fee;
+  }
+
+  processToCheckout() {
+    this.props.history.push('/shipping-address');
   }
 
   render() {
@@ -68,6 +75,9 @@ class ShoppingCart extends Component {
               <span className='total-value'>{this.getTotal().toFixed(2)} THB</span>
             </div>
           </div>
+        </div>
+        <div>
+          <button className="checkout" onClick={this.processToCheckout}>Process to checkout</button>
         </div>
       </div>
     );

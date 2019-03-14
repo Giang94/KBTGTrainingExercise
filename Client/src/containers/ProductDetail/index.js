@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import SelectBox from '../../components/Select'
 import {excuteGetProductDetail} from '../../actions/products'
 
@@ -15,7 +15,8 @@ export default class ProductDetail extends Component {
         super(props)
         this.state = {
             productDetail: [],
-            quality: 1
+            quality: 1,
+            redirect: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -29,8 +30,7 @@ export default class ProductDetail extends Component {
     handleClick(event) {
       this.state.productDetail['quality'] = this.state.quality
       sessionStorage.setItem('cart', JSON.stringify(this.state.productDetail));
-      //var obj = JSON.parse(sessionStorage.cart);
-      return <Redirect to='/ShoppingCart'/>;
+      this.props.history.push('/shopping-cart')
     }
 
     componentDidMount() {

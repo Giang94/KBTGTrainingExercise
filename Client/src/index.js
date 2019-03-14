@@ -9,7 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers';
 import App from './containers/App';
 import ProductDetail from './containers/ProductDetail'
-import ShoppingCart from './containers/ShoppingCart/ShoppingCart'
+import ShoppingCart from './containers/ShoppingCart';
 
 const store = createStore(
     combineReducers({
@@ -28,6 +28,7 @@ render(
       <div>
         <Route exact path="/" component={App}/>
         <Route path="/product/:searchParams" component={ProductDetail}/>
+        <Route path="/shopping-cart" component={ShoppingCart}/>
       </div>
     </BrowserRouter>
   </Provider>,

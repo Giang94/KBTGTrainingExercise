@@ -26,7 +26,7 @@ public class ProductServiceTest {
     private ProductService productService;
 
     /**
-     * Case 1: get products by age should return empty data in case of there is no product in server
+     * get products by age should return empty data in case of there is no product in server
      */
     @Test
     public void get_product_by_age_return_an_empty_list_data(){
@@ -38,7 +38,7 @@ public class ProductServiceTest {
     }
 
     /**
-     * Case 2: get products by age should return a list of products
+     * get products by age should return a list of products
      */
     @Test
     public void get_product_by_age_return_a_list_data(){
@@ -56,7 +56,7 @@ public class ProductServiceTest {
 
 
     /**
-     * Case 3: get all product should return a list of product
+     * get all product should return a list of product
      */
     @Test
     public void get_product_with_no_params_return_a_list_data(){
@@ -89,11 +89,11 @@ public class ProductServiceTest {
      */
     @Test
     public void get_product_by_gender_return_empty_data(){
-        Map<String, Object> mapData = new HashMap<>();
-        mapData.put("gender", "Male");
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("gender", "Male");
 
         when(productRepository.find(anyMap(), any())).thenReturn(new ArrayList<>());
-        GenericResponseObject responseObject = productService.getProducts(mapData);
+        GenericResponseObject responseObject = productService.getProducts(mapParams);
 
         assertTrue(responseObject.getStatus().equals("SUCCESS"));
         assertTrue(responseObject.getData() != null);
@@ -105,13 +105,13 @@ public class ProductServiceTest {
      */
     @Test
     public void get_product_by_gender_return_a_list_data(){
-        Map<String, Object> mapData = new HashMap<>();
-        mapData.put("gender", "Male");
+        Map<String, Object> mapParams = new HashMap<>();
+        mapParams.put("gender", "Male");
         List<Product> expectedData = new ArrayList<>();
         expectedData.add(new Product());
 
         when(productRepository.find(anyMap(), any())).thenReturn(expectedData);
-        GenericResponseObject responseObject = productService.getProducts(mapData);
+        GenericResponseObject responseObject = productService.getProducts(mapParams);
 
         assertTrue(responseObject.getStatus().equals("SUCCESS"));
         assertTrue(responseObject.getData() != null);
@@ -132,7 +132,7 @@ public class ProductServiceTest {
         Optional<Product> expectedRs = Optional.of(product);
 
         when(productRepository.findById(any(ObjectId.class))).thenReturn(expectedRs);
-        GenericResponseObject responseObject = productService.getProduct("5c88ad8bb835e74a306db14e");
+        GenericResponseObject responseObject = productService.getProductById("5c88ad8bb835e74a306db14e");
 
         assertTrue(responseObject.getData() != null);
     }
@@ -143,7 +143,7 @@ public class ProductServiceTest {
     @Test
     public void get_product_details_should_return_empty(){
         when(productRepository.findById(any(ObjectId.class))).thenReturn(Optional.empty());
-        GenericResponseObject responseObject = productService.getProduct("5c88ad8bb835e74a306db14e");
+        GenericResponseObject responseObject = productService.getProductById("5c88ad8bb835e74a306db14e");
 
         assertTrue(responseObject.getMessageCode().equals(Messages.PRODUCT_ID_NOT_EXIST));
     }
