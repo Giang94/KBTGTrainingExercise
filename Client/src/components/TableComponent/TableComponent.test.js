@@ -10,8 +10,8 @@ describe('Table Component', () => {
     {name: 'Column Two', key: 'key2'}
   ];
   const fixtureData = [
-    {key1: 'value1'},
-    {key2: 'value2'}
+    {key1: 'valueA1', key2: 'valueA2'},
+    {key1: 'valueB1', key2: 'valueB2'}
   ];
 
   beforeEach(() => wrapper = shallow(<TableComponent />));
@@ -25,11 +25,7 @@ describe('Table Component', () => {
   });
 
   it('should have 2 columns if the "columns" property is a 2-item array', () => {    
-    const columnsConfig = [
-      {name: 'Column One', key: 'key1'},
-      {name: 'Column Two', key: 'key2'}
-    ];
-    wrapper = shallow(<TableComponent columns={columnsConfig}/>);
+    wrapper.setProps({columns: fixtureColumns});
     expect(wrapper.find('table thead tr th').length).toBe(2);
   });
 
@@ -38,25 +34,31 @@ describe('Table Component', () => {
   });
 
   it('should have 2 rows if the "data" property is a 2-item array', () => {
-    const dataConfig = [
-      {key1: 'value1'},
-      {key2: 'value2'}
-    ];
-    wrapper = shallow(<TableComponent data={dataConfig}/>);
+    wrapper.setProps({data: fixtureData});
     expect(wrapper.find('table tbody tr').length).toBe(2);
   });
 
   it('should display data correcly in the first row and the second row', () => {
-    const columnsConfig = [
-      {name: 'Column One', key: 'key1'},
-      {name: 'Column Two', key: 'key2'}
-    ];
+    wrapper.setProps({
+      columns: fixtureColumns, 
+      data: fixtureData
+    });
+    
+    expect(wrapper.find('table tbody tr').first().find('td').first().text()).toBe('valueA1');
+    expect(wrapper.find('table tbody tr').first().find('td').last().text()).toBe('valueA2');
 
-    const dataConfig = [
-      {key1: 'valueA1', key2: 'valueA2'},
-      {key1: 'valueB1', key2: 'valueB2'}
-    ];
-    wrapper = shallow(<TableComponent columns={columnsConfig} data={dataConfig}/>);
+    expect(wrapper.find('table tbody tr').last().find('td').first().text()).toBe('valueB1');
+    expect(wrapper.find('table tbody tr').last().find('td').last().text()).toBe('valueB2');
+  });
+
+  it('should display data correcly in the first row and the second row, even if the data return functions', () => {
+    wrapper.setProps({
+      columns: fixtureColumns, 
+      data: [
+        {key1: () => ('valueA1'), key2: 'valueA2'},
+        {key1: () => ('valueB1'), key2: 'valueB2'}
+      ]
+    });
     
     expect(wrapper.find('table tbody tr').first().find('td').first().text()).toBe('valueA1');
     expect(wrapper.find('table tbody tr').first().find('td').last().text()).toBe('valueA2');
