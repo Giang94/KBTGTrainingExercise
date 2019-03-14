@@ -1,6 +1,6 @@
 package agile.test.exercise.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -12,6 +12,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import agile.test.exercise.model.Order;
 import agile.test.exercise.repository.OrderRepository;
 import agile.test.exercise.responseoject.GenericResponseObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderServiceTest {
@@ -38,5 +41,17 @@ public class OrderServiceTest {
 
 		GenericResponseObject response = orderService.createOrder(order);
 		assertEquals("FAILED", response.getStatus());
+	}
+
+	@Test
+	public void get_all_order_should_return_data(){
+		List<Order> expectedOrders = new ArrayList<>();
+		expectedOrders.add(new Order());
+		when(orderRepository.findAll()).thenReturn(expectedOrders);
+
+		GenericResponseObject responseObject = orderService.getAllOrders();
+
+		assertTrue(responseObject.getData() != null);
+		assertFalse(((List)responseObject.getData()).isEmpty());
 	}
 }

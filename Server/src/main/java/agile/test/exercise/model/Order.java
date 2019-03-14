@@ -13,8 +13,8 @@ public class Order extends GenericModel<ObjectId> {
 
     private DeliveryAddress address;
     private Map<String, Integer> cartItems = new HashMap<>();
-    private String subTotal;
-    private String shippingFee;
+    private int subTotal;
+    private int shippingFee;
 
     public DeliveryAddress getAddress() {
         return address;
@@ -32,19 +32,19 @@ public class Order extends GenericModel<ObjectId> {
         this.cartItems = cartItems;
     }
 
-    public String getSubTotal() {
+    public int getSubTotal() {
         return subTotal;
     }
 
-    public void setSubTotal(String subTotal) {
+    public void setSubTotal(int subTotal) {
         this.subTotal = subTotal;
     }
 
-    public String getShippingFee() {
+    public int getShippingFee() {
         return shippingFee;
     }
 
-    public void setShippingFee(String shippingFee) {
+    public void setShippingFee(int shippingFee) {
         this.shippingFee = shippingFee;
     }
 }

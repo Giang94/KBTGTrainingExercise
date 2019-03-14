@@ -36,6 +36,7 @@ public class ProductService {
             responseObject.setData(products);
         } catch (Exception e){
             responseObject.setStatus("FAILED");
+            responseObject.setMessageCode(Messages.SERVER_DATABASE_ERROR);
             LOGGER.error("Exception while getting products.", e);
         }
         return responseObject;
@@ -49,12 +50,17 @@ public class ProductService {
     public GenericResponseObject getProductById(String id){
         LOGGER.debug("Getting product by id: {}", id);
         GenericResponseObject responseObject = new GenericResponseObject();
-        Optional<Product> existingProduct = productRepository.findById(new ObjectId(id));
-        if (existingProduct != null && existingProduct.isPresent()) {
-            responseObject.setData(existingProduct.get());
-        } else {
-            responseObject.setMessageCode(Messages.PRODUCT_ID_NOT_EXIST);
-            LOGGER.warn("Product id {} doesn't exist", id);
+        try {
+            Optional<Product> existingProduct = productRepository.findById(new ObjectId(id));
+            if (existingProduct != null && existingProduct.isPresent()) {
+                responseObject.setData(existingProduct.get());
+            } else {
+                responseObject.setMessageCode(Messages.PRODUCT_ID_NOT_EXIST);
+                responseObject.setMessageCode(Messages.SERVER_DATABASE_ERROR);
+                LOGGER.warn("Product id {} doesn't exist", id);
+            }
+        } catch (Exception e){
+            LOGGER.error("Exception while getting data", e);
         }
         return responseObject;
     }
