@@ -9,6 +9,7 @@ const rootStyle = {
   width: '700px',
   margin: '0 auto'
 };
+let carts = []
 
 export default class ProductDetail extends Component {
     constructor(props) {
@@ -23,13 +24,13 @@ export default class ProductDetail extends Component {
     }
 
     handleChange(event) {
-      console.log(event.target.value)
       this.setState({quality: event.target.value})
     }
 
     handleClick(event) {
       this.state.productDetail['quality'] = this.state.quality
-      sessionStorage.setItem('cart', JSON.stringify(this.state.productDetail));
+      carts.push(this.state.productDetail)
+      sessionStorage.setItem('cart', JSON.stringify(carts));
       this.props.history.push('/shopping-cart')
     }
 
