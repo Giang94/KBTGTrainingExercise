@@ -6,7 +6,7 @@ import ShoppingCart from '../containers/ShoppingCart';
 describe('Shopping Cart', () => {
   let wrapper;
   let history = { push: jest.fn() };
-  beforeEach(() => wrapper = shallow(<ShoppingCart />));
+  beforeEach(() => wrapper = shallow(<ShoppingCart />, { disableLifecycleMethods: true }));
 
   it('should render a title', () => {     
     expect(wrapper.find('.title').text()).toEqual('Shopping Cart');
@@ -37,7 +37,7 @@ describe('Shopping Cart', () => {
       {name: 'abc', quantity: '1', price: '123'}
     ];
 
-    wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>);
+    wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>, { disableLifecycleMethods: true });
 
     expect(wrapper.find('.sub-total').length).toBe(1);
     expect(wrapper.find('.sub-total-label').text()).toBe('Subtotal (1 item):');
@@ -52,7 +52,7 @@ describe('Shopping Cart', () => {
       {name: 'www', quantity: '2', price: '10'},
     ];
 
-    wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>);
+    wrapper = shallow(<ShoppingCart itemList={itemListFixture}/>, { disableLifecycleMethods: true });
 
     expect(wrapper.find('.sub-total').length).toBe(1);
     expect(wrapper.find('.sub-total-label').text()).toBe('Subtotal (4 items):');
@@ -65,7 +65,7 @@ describe('Shopping Cart', () => {
   });
 
   it('should handle the onSubmit action', () => {
-    wrapper = shallow(<ShoppingCart history={history}/>)
+    wrapper = shallow(<ShoppingCart history={history}/>, { disableLifecycleMethods: true })
     wrapper.find('button.checkout').simulate('click');
     expect(history.push).toHaveBeenLastCalledWith('/shipping-address');
   });

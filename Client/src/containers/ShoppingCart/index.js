@@ -11,7 +11,7 @@ class ShoppingCart extends Component {
       shipping: props.shipping,
       itemList: props.itemList,
       columnConfig: [
-        {name: 'Items', key: 'details'},
+        {name: 'Items', key: 'showDetail'},
         {name: 'Quantity', key: 'quantity'},
         {name: 'Price (THB)', key: 'price'}
       ]
@@ -20,6 +20,28 @@ class ShoppingCart extends Component {
     this.getItemNumber = this.getItemNumber.bind(this);
     this.getSubTotal = this.getSubTotal.bind(this);
     this.getTotal = this.getTotal.bind(this);
+  }
+
+  componentDidMount() {
+    const itemListString = sessionStorage.getItem('cart');
+    const itemList = JSON.parse(itemListString);
+    let itemListArray = Array.isArray(itemList) ? itemList : [itemList];
+
+    itemListArray.map(item => {
+      item.quantity = item.quality;
+      item.showDetail = () => (
+        <div>
+          <div><b>{item.name}</b> by {item.brandName}</div>
+          <div>Gender: <b>{item.gender}</b>  Age: <b>{item.age}</b></div>
+          <div style={{color: 'red'}}>{item.status}</div>          
+        </div>
+      );
+    });
+
+    this.setState(() => ({
+      itemList: itemListArray
+    }));
+    
   }
 
   getItemNumber() {
@@ -49,7 +71,7 @@ class ShoppingCart extends Component {
   render() {
     return (
       <div className="shopping-cart">
-        <div className='title'>Shopping Cart</div>
+        <h1 className='title'>Shopping Cart</h1>
         <TableComponent
           className='item-list'
           columns={this.state.columnConfig}
