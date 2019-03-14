@@ -17,7 +17,7 @@ public class OrderService {
         try {
             repository.save(order);
         } catch (Exception e){
-            responseObject.setData("FAILED");
+            responseObject.setStatus("FAILED");
         }
         return responseObject;
     }
