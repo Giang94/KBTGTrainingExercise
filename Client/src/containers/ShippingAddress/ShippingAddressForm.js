@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {excuteOrderToDelivery} from '../../actions/products'
+// import {excuteOrderToDelivery} from '../../actions/products'
 
 class ShippingAddressForm extends Component {
   constructor(props) {
@@ -53,33 +53,15 @@ class ShippingAddressForm extends Component {
 
   deliverySubmit(e) {
     e.preventDefault();
-    console.log('called');
-    this.props.onSubmit();
-    // return;
-    // fullName, address1, address2, city, provine, postCode
-    const orderObj = {
-        "address": {
-          "fullName": this.state.fullName,
-          "address1": this.state.address1,
-          "address2": this.state.address2,
-          "city": this.state.city,
-          "province": this.state.provine,
-          "postCode": this.state.postCode
-        },
-        "cartItems": [{
-          "5c88ad8bb835e74a306db14e" : 2
-        }],
-        "subTotal": 100000,
-        "shippingFee": 50
-      }
-      orderObj.cartItems = this.props.itemList.map((item) => (
-        {[item.id]: item.quality}
-      ));
-      console.log(orderObj);
-      // excuteOrderToDelivery(orderObj).then((result)=>{
-      //   console.log(result)
-      //   this.props.onSubmit();
-      // })
+    this.props.onSubmit({
+      "fullName": this.state.fullName,
+      "address1": this.state.address1,
+      "address2": this.state.address2,
+      "city": this.state.city,
+      "province": this.state.provine,
+      "postCode": this.state.postCode
+    });
+    
   }
 
   render() {
